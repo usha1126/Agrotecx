@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>AgroTecX - Smart Agriculture Assistant</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Icon font for section and field icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SVLQfWZcQOoEHTLxeA/cQl1V0q7sqnT6UMt3P5p6lSWn8zltMb1pH7kHBPfdeRGEJf1xliC3UUMWc7VQ8C+J0A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <span class="logo-circle">A</span>
+        <div>
+          <h1>AgroTecX</h1>
+          <p class="tagline">Smart digital assistant for farmers</p>
+        </div>
+      </div>
+      <div class="language-selector">
+        <label for="languageSelect">Language</label>
+        <select id="languageSelect">
+          <option value="en">English</option>
+          <option value="te">తెలుగు (Telugu)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+        </select>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="panel">
+        <h2 id="farmerFormTitle">
+          <span class="section-icon" aria-hidden="true">🌱</span>
+          Farmer details &amp; crop planner
+        </h2>
+        <p class="panel-subtitle" id="farmerFormSubtitle">
+          Enter basic details to get suitable crop recommendations and advisory.
+        </p>
+
+        <form id="farmerForm" class="form-grid">
+          <div class="form-field">
+            <label for="nameInput" id="labelName">
+              <span class="field-icon" aria-hidden="true">👤</span>
+              <span class="field-label-text">Farmer name</span>
+            </label>
+            <input
+              type="text"
+              id="nameInput"
+              name="name"
+              placeholder="Enter your name"
+              required
+            />
+          </div>
+
+          <div class="form-field">
+            <label for="locationInput" id="labelLocation">
+              <span class="field-icon" aria-hidden="true">📍</span>
+              <span class="field-label-text">Location</span>
+            </label>
+            <input
+              type="text"
+              id="locationInput"
+              name="location"
+              placeholder="Village / Mandal / District"
+              required
+            />
+          </div>
+
+          <div class="form-field">
+            <label for="soilTypeInput" id="labelSoil">
+              <span class="field-icon" aria-hidden="true">🌾</span>
+              <span class="field-label-text">Soil type</span>
+            </label>
+            <input
+              type="text"
+              id="soilTypeInput"
+              name="soilType"
+              placeholder="Black, red, loamy, sandy..."
+              required
+            />
+          </div>
+
+          <div class="form-field">
+            <label for="seasonInput" id="labelSeason">
+              <span class="field-icon" aria-hidden="true">🌞</span>
+              <span class="field-label-text">Season</span>
+            </label>
+            <input
+              type="text"
+              id="seasonInput"
+              name="season"
+              placeholder="Kharif / Rabi / Summer"
+              required
+            />
+          </div>
+
+          <div class="form-field">
+            <label for="waterInput" id="labelWater">
+              <span class="field-icon" aria-hidden="true">💧</span>
+              <span class="field-label-text">Water availability</span>
+            </label>
+            <input
+              type="text"
+              id="waterInput"
+              name="waterAvailability"
+              placeholder="Canal / borewell / rainfed / low / high"
+              required
+            />
+          </div>
+
+          <div class="form-field">
+            <label for="budgetInput" id="labelBudget">
+              <span class="field-icon" aria-hidden="true">
+                <i class="fa-solid fa-coins"></i>
+              </span>
+              <span class="field-label-text">Budget (₹)</span>
+            </label>
+            <input
+              type="number"
+              id="budgetInput"
+              name="budget"
+              placeholder="Approximate budget for the season"
+              min="0"
+              required
+            />
+          </div>
+
+          <button type="submit" id="submitButton" class="btn-primary">
+            <span aria-hidden="true">🌱</span>
+            <span>Get recommendations</span>
+          </button>
+        </form>
+
+        <div id="recommendationPanel" class="result-card hidden">
+          <h3 id="recommendationTitle">Recommended crops</h3>
+          <p id="recommendationList"></p>
+          <h3 id="advisoryTitle">General advisory</h3>
+          <p id="advisoryText"></p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <h2 id="voiceTitle">
+              <span class="section-icon" aria-hidden="true">
+                <i class="fa-solid fa-microphone-lines"></i>
+              </span>
+              Voice-based advisory
+            </h2>
+            <p class="panel-subtitle" id="voiceSubtitle">
+              Ask questions about crops, fertilizer, irrigation, pests and weather.
+            </p>
+          </div>
+          <button
+            id="micButton"
+            class="mic-button"
+            type="button"
+            aria-label="Start listening"
+          >
+            <span class="mic-icon"></span>
+          </button>
+        </div>
+
+        <div class="voice-input">
+          <label for="questionInput" id="labelQuestion">
+            <span class="field-icon" aria-hidden="true">
+              <i class="fa-regular fa-comment-dots"></i>
+            </span>
+            <span class="field-label-text">Or type your question</span>
+          </label>
+          <textarea
+            id="questionInput"
+            rows="3"
+            placeholder="Example: What fertilizer should I use for rice?"
+          ></textarea>
+          <button id="askButton" class="btn-secondary" type="button">
+            <span aria-hidden="true">
+              <i class="fa-solid fa-seedling"></i>
+            </span>
+            <span>Get advisory</span>
+          </button>
+          <p class="hint-text" id="voiceHint">
+            Voice recognition uses your browser capabilities. If offline
+            recognition is not available, you can still type your question.
+          </p>
+        </div>
+
+        <div class="quick-topics">
+          <button
+            type="button"
+            class="quick-topic-btn"
+            data-topic="fertilizer"
+          >
+            <span aria-hidden="true"><i class="fa-solid fa-flask"></i></span>
+            <span>Fertilizer</span>
+          </button>
+          <button
+            type="button"
+            class="quick-topic-btn"
+            data-topic="irrigation"
+          >
+            <span aria-hidden="true"><i class="fa-solid fa-droplet"></i></span>
+            <span>Irrigation</span>
+          </button>
+          <button type="button" class="quick-topic-btn" data-topic="pest">
+            <span aria-hidden="true"><i class="fa-solid fa-bug"></i></span>
+            <span>Pest</span>
+          </button>
+          <button type="button" class="quick-topic-btn" data-topic="weather">
+            <span aria-hidden="true"><i class="fa-solid fa-cloud-sun"></i></span>
+            <span>Weather</span>
+          </button>
+        </div>
+
+        <div id="voiceResult" class="result-card hidden">
+          <h3 id="voiceAnswerTitle">Advisory</h3>
+          <p id="voiceAnswerText"></p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 id="imageTitle">
+          <span class="section-icon" aria-hidden="true">
+            <i class="fa-regular fa-image"></i>
+          </span>
+          Crop image upload (prototype)
+        </h2>
+        <p class="panel-subtitle" id="imageSubtitle">
+          Upload a crop image to get a basic, non-diagnostic explanation.
+        </p>
+
+        <form id="imageForm" class="image-form">
+          <input type="file" id="imageInput" name="cropImage" accept="image/*" />
+          <button type="submit" class="btn-secondary" id="imageUploadButton">
+            Upload image
+          </button>
+        </form>
+
+        <div id="imageResult" class="result-card hidden">
+          <h3 id="imageResultTitle">Image analysis (demo)</h3>
+          <p id="imageResultText"></p>
+          <ul id="imageFindingsList"></ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>
+        AgroTecX is a prototype decision-support tool. Always verify with local
+        agricultural experts before acting.
+      </p>
+    </footer>
+
+    <script src="voice-assistant.js"></script>
+    <script src="main.js"></script>
+  </body>
+  </html>
+
